@@ -28,9 +28,15 @@ public interface ApiService {
     Call<JsonArray> getTriggers(@Header("Authorization") String token);
 
     @GET("devices")
+    Call<JsonArray> getAllDevices(@Header("Authorization") String authHeader);
+
+    @GET("user/devices")
     Call<JsonArray> getDevices(@Header("Authorization") String authHeader);
 
-    @POST("orders/button")
+    @POST("devices")
+    Call<JsonObject> createDevice(@Header("Authorization") String authHeader, @Body JsonObject nuevo);
+
+    @POST("buttons")
     Call<JsonObject> sendButtonTrigger(@Header("Authorization") String token, @Body JsonObject data);
 
     @GET("processes")

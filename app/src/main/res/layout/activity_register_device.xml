@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#222831"
+    android:padding="24dp"
+    tools:context=".presentacion.RegisterDeviceActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Título -->
+        <TextView
+            android:id="@+id/tvTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registrar Dispositivo"
+            android:textColor="#EEEEEE"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="30dp" />
+
+        <!-- Nombre del dispositivo -->
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre del dispositivo"
+            android:inputType="text"
+            android:textColor="#EEEEEE"
+            android:textColorHint="#EEEEEE"
+            android:textSize="16sp"
+            android:backgroundTint="#00ADB5"
+            android:padding="10dp"
+            android:layout_marginBottom="20dp" />
+
+        <!-- ESP32 ID -->
+        <EditText
+            android:id="@+id/etEsp32Id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ESP32 ID (ej: esp32-abc123)"
+            android:inputType="text"
+            android:textColor="#EEEEEE"
+            android:textColorHint="#EEEEEE"
+            android:textSize="16sp"
+            android:backgroundTint="#00ADB5"
+            android:padding="10dp"
+            android:layout_marginBottom="30dp" />
+
+        <!-- Botón Guardar -->
+        <Button
+            android:id="@+id/btnGuardar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guardar"
+            android:textColor="#EEEEEE"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textAllCaps="false"
+            android:padding="16dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginBottom="32dp"
+            android:backgroundTint="#00ADB5"
+            android:background="@drawable/btn_rounded_celeste" />
+
+        <!-- Progress bar -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"
+            style="?android:attr/progressBarStyleLarge" />
+
+    </LinearLayout>
+</ScrollView>

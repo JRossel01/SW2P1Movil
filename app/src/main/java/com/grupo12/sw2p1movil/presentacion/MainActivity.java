@@ -12,7 +12,7 @@ import com.grupo12.sw2p1movil.negocio.NsessionManager;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btnIrBotones, btnIrProcesos, btnLogout;
+    private Button btnIrBotones, btnIrProcesos, btnLogout, btnIrRegistrarDispositivo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,16 +23,6 @@ public class MainActivity extends AppCompatActivity {
         btnIrProcesos = findViewById(R.id.btnIrProcesos);
         btnLogout = findViewById(R.id.btnLogout);
 
-//        Nbutton nbutton = new Nbutton(this);
-//        if (nbutton.obtenerBotones().isEmpty()) {
-//            nbutton.agregarBoton(1, "B1");
-//            nbutton.agregarBoton(1, "B2");
-//            nbutton.agregarBoton(1, "B3");
-//            nbutton.agregarBoton(1, "B4");
-//            nbutton.agregarBoton(1, "B5");
-//            nbutton.agregarBoton(1, "B6");
-//            nbutton.agregarBoton(1, "B7");
-//        }
 
         btnIrBotones.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,5 +56,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btnIrRegistrarDispositivo = findViewById(R.id.btnIrRegistrarDispositivo);
+        btnIrRegistrarDispositivo.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, RegisterDeviceActivity.class);
+            startActivity(intent);
+        });
+
     }
 }
