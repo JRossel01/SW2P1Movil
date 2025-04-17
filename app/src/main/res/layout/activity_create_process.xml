@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#222831"
+    android:orientation="vertical"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="24dp"
+    android:paddingBottom="24dp">
+
+    <!-- Scroll de campos -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Título -->
+            <TextView
+                android:id="@+id/tvTitulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Crear nuevo proceso"
+                android:textColor="#EEEEEE"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:textAlignment="center"
+                android:layout_marginBottom="24dp" />
+
+            <!-- Nombre del proceso -->
+            <EditText
+                android:id="@+id/etNombreProceso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nombre del proceso"
+                android:inputType="text"
+                android:textColor="#EEEEEE"
+                android:textColorHint="#EEEEEE"
+                android:textSize="16sp"
+                android:backgroundTint="#00ADB5"
+                android:padding="12dp"
+                android:layout_marginBottom="20dp" />
+
+            <!-- Título trigger -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tipo de disparador"
+                android:textColor="#EEEEEE"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Spinner de trigger -->
+            <Spinner
+                android:id="@+id/spinnerTrigger"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00ADB5"
+                android:popupBackground="#393E46"
+                android:layout_marginBottom="20dp" />
+
+            <!-- Contenedor para campo dinámico -->
+            <LinearLayout
+                android:id="@+id/layoutValueTrigger"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:layout_marginBottom="30dp">
+            </LinearLayout>
+
+            <!-- Texto para reactivación -->
+            <TextView
+                android:id="@+id/tvReactivation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Frecuencia de reactivación"
+                android:textColor="#EEEEEE"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Spinner de reactivación -->
+            <Spinner
+                android:id="@+id/spinnerReactivation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00ADB5"
+                android:popupBackground="#393E46"
+                android:layout_marginBottom="24dp" />
+
+            <!-- Título de acciones -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Acciones del proceso"
+                android:textColor="#EEEEEE"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Spinner de acciones -->
+            <Spinner
+                android:id="@+id/spinnerActions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00ADB5"
+                android:popupBackground="#393E46" />
+
+            <!-- Botón agregar acción -->
+            <Button
+                android:id="@+id/btnAgregarAccion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Agregar acción"
+                android:textStyle="bold"
+                android:textColor="#222831"
+                android:backgroundTint="#00ADB5"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Lista de acciones seleccionadas -->
+            <LinearLayout
+                android:id="@+id/layoutAccionesSeleccionadas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Botón fijo al fondo -->
+            <Button
+                android:id="@+id/btnCrearProceso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Crear proceso"
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                android:textColor="#EEEEEE"
+                android:backgroundTint="#00ADB5"
+                android:textSize="16sp"
+                android:padding="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="6dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/btn_rounded_celeste" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

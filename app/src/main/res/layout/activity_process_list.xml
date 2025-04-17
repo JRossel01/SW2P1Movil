@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#222831"
+    android:paddingStart="12dp"
+    android:paddingEnd="12dp"
+    android:paddingTop="24dp"
+    android:paddingBottom="24dp"
+    tools:context=".presentacion.ProcessListActivity">
+
+    <!-- Título centrado -->
+    <TextView
+        android:id="@+id/tvTitulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Procesos"
+        android:textColor="#EEEEEE"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:layout_marginBottom="7dp" />
+
+    <Button
+        android:id="@+id/btnCrearProceso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Crear nuevo proceso"
+        android:textColor="#222831"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:backgroundTint="#00ADB5"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:padding="14dp" />
+
+    <!-- Scroll con lista de procesos -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/layoutProcesos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+</LinearLayout>
