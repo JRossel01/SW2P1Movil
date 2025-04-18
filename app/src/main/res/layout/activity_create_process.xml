@@ -66,6 +66,16 @@
                 android:popupBackground="#393E46"
                 android:layout_marginBottom="20dp" />
 
+            <!-- Selector de operador -->
+            <Spinner
+                android:id="@+id/spinnerOperator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00ADB5"
+                android:popupBackground="#393E46"
+                android:visibility="gone"
+                android:layout_marginBottom="24dp" />
+
             <!-- Contenedor para campo dinámico -->
             <LinearLayout
                 android:id="@+id/layoutValueTrigger"

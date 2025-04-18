@@ -49,6 +49,11 @@ public class CreateProcessActivity extends AppCompatActivity {
     private Spinner spinnerReactivation;
     private String reactivationValue = "always";
     private final Map<String, String> reactivationMap = new HashMap<>();
+    private final Map<String, String> operatorMap = new HashMap<>();
+
+    private Spinner spinnerOperator;
+    private String operatorValue = "="; // valor por defecto
+
 
     private int deviceId;
 
@@ -63,6 +68,33 @@ public class CreateProcessActivity extends AppCompatActivity {
         tvReactivation = findViewById(R.id.tvReactivation);
         spinnerTrigger = findViewById(R.id.spinnerTrigger);
         layoutValueTrigger = findViewById(R.id.layoutValueTrigger);
+        spinnerOperator = findViewById(R.id.spinnerOperator);
+        spinnerOperator.setVisibility(View.GONE);
+
+
+        operatorMap.put("Igual a", "=");
+        operatorMap.put("Mayor que", ">");
+        operatorMap.put("Menor que", "<");
+
+        ArrayAdapter<String> operatorAdapter = new ArrayAdapter<>(
+                this, R.layout.spinner_item, new ArrayList<>(operatorMap.keySet())
+        );
+        operatorAdapter.setDropDownViewResource(R.layout.spinner_item);
+        spinnerOperator.setAdapter(operatorAdapter);
+        spinnerOperator.setSelection(0); // "Igual a" por defecto
+        operatorValue = operatorMap.get("Igual a");
+
+        spinnerOperator.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String seleccion = parent.getItemAtPosition(position).toString();
+                operatorValue = operatorMap.get(seleccion);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
         btnCrearProceso = findViewById(R.id.btnCrearProceso);
 
         spinnerReactivation = findViewById(R.id.spinnerReactivation);
@@ -110,8 +142,16 @@ public class CreateProcessActivity extends AppCompatActivity {
                 selectedTriggerId = trigger.get("id").getAsInt();
                 actualizarCampoValueTrigger();
 
+                // Mostrar u ocultar spinner de operador (solo si trigger es "Luz exterior", id = 1)
+                if (selectedTriggerId == 1) {
+                    spinnerOperator.setVisibility(View.VISIBLE);
+                } else {
+                    spinnerOperator.setVisibility(View.GONE);
+                    operatorValue = "="; // se fija automáticamente
+                }
+
                 // Mostrar u ocultar reactivación según tipo de trigger
-                if (selectedTriggerId == 7 || selectedTriggerId == 8) {
+                if (selectedTriggerId == 5 || selectedTriggerId == 6) {
                     spinnerReactivation.setVisibility(View.GONE);
                     tvReactivation.setVisibility(View.GONE);
                     reactivationValue = "always";
@@ -138,7 +178,7 @@ public class CreateProcessActivity extends AppCompatActivity {
                 return;
             }
 
-            if (selectedTriggerId == 8) {
+            if (selectedTriggerId == 6) {
                 obtenerBnDesdeBackend(deviceId, bn -> {
                     if (bn == null) {
                         Toast.makeText(this, "No hay botones disponibles", Toast.LENGTH_SHORT).show();
@@ -161,6 +201,7 @@ public class CreateProcessActivity extends AppCompatActivity {
         data.addProperty("trigger_id", selectedTriggerId);
         data.addProperty("device_id", deviceId);
         data.addProperty("value_trigger", valueTriggerFinal);
+        data.addProperty("operator", operatorValue);
         data.addProperty("reactivation", reactivationValue);
 
         JsonArray actionsArray = new JsonArray();
@@ -184,10 +225,11 @@ public class CreateProcessActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Toast.makeText(CreateProcessActivity.this, "Proceso creado exitosamente", Toast.LENGTH_SHORT).show();
 
-                    if (selectedTriggerId == 8) {
+                    if (selectedTriggerId == 6) {
                         JsonObject boton = new JsonObject();
                         boton.addProperty("device_id", deviceId);
                         boton.addProperty("button_id", valueTriggerFinal);
+                        boton.addProperty("process_name", nombre);
 
                         apiService.createButton("Bearer " + token, boton).enqueue(new Callback<JsonObject>() {
                             @Override
@@ -265,23 +307,23 @@ public class CreateProcessActivity extends AppCompatActivity {
         layoutValueTrigger.removeAllViews();
         valueTriggerFinal = "";
 
-        if (selectedTriggerId >= 1 && selectedTriggerId <= 3) {
+        if (selectedTriggerId == 1) {
             String[] opciones = {"0", "1", "2", "3", "4", "5"};
             Spinner s = crearSpinner(opciones, selected -> valueTriggerFinal = selected);
             layoutValueTrigger.addView(s);
             layoutValueTrigger.setVisibility(View.VISIBLE);
 
-        } else if (selectedTriggerId == 4) {
+        } else if (selectedTriggerId == 2) {
             String[] opciones = {"Encendida", "Apagada"};
             Spinner s = crearSpinner(opciones, selected -> valueTriggerFinal = selected.equals("Encendida") ? "1" : "0");
             layoutValueTrigger.addView(s);
             layoutValueTrigger.setVisibility(View.VISIBLE);
 
-        } else if (selectedTriggerId == 5 || selectedTriggerId == 6) {
+        } else if (selectedTriggerId == 3 || selectedTriggerId == 4) {
             valueTriggerFinal = "1";
             layoutValueTrigger.setVisibility(View.GONE);
 
-        } else if (selectedTriggerId == 7) {
+        } else if (selectedTriggerId == 5) {
             Button btnHora = new Button(this);
             btnHora.setText("Seleccionar hora");
             btnHora.setTextColor(Color.rgb(238, 238, 238)); // blanco
@@ -308,7 +350,7 @@ public class CreateProcessActivity extends AppCompatActivity {
             layoutValueTrigger.addView(btnHora);
             layoutValueTrigger.setVisibility(View.VISIBLE);
 
-        } else if (selectedTriggerId == 8) {
+        } else if (selectedTriggerId == 6) {
             obtenerBnDesdeBackend(deviceId, bn -> {
                 valueTriggerFinal = bn;
                 if (bn == null) {

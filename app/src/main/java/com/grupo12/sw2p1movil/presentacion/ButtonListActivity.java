@@ -59,7 +59,8 @@ public class ButtonListActivity extends AppCompatActivity {
                         String buttonId = btn.get("button_id").getAsString();
 
                         Button b = new Button(ButtonListActivity.this);
-                        b.setText("Botón " + buttonId);
+                        String processName = btn.has("process_name") ? btn.get("process_name").getAsString() : ("Botón " + buttonId);
+                        b.setText(processName);
                         b.setAllCaps(false);
                         b.setTextColor(0xFFEEEEEE);
                         b.setTextSize(16);
@@ -81,7 +82,7 @@ public class ButtonListActivity extends AppCompatActivity {
 
                         b.setOnClickListener(v -> {
                             JsonObject json = new JsonObject();
-                            json.addProperty("trigger_id", 8);
+                            json.addProperty("trigger_id", 6);
                             json.addProperty("device_id", deviceId);
                             json.addProperty("value", buttonId);
 

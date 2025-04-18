@@ -78,6 +78,9 @@ public class ProcessListActivity extends AppCompatActivity {
                         int processId = proceso.get("id").getAsInt();
                         String name = proceso.get("name").getAsString();
                         String valueTrigger = proceso.has("value_trigger") ? proceso.get("value_trigger").getAsString() : "";
+                        String operator = proceso.has("operator") ? proceso.get("operator").getAsString() : "=";
+                        int triggerId = proceso.has("trigger_id") ? proceso.get("trigger_id").getAsInt() : -1;
+
 
                         // Trigger info
                         String trigger = "Desconocido";
@@ -130,7 +133,11 @@ public class ProcessListActivity extends AppCompatActivity {
 
                         // --- Trigger + valor ---
                         TextView tvTrigger = new TextView(ProcessListActivity.this);
-                        tvTrigger.setText(trigger + " " + valueTrigger);
+                        if (triggerId == 1) {
+                            tvTrigger.setText(trigger + " " + operator + " " + valueTrigger);
+                        } else {
+                            tvTrigger.setText(trigger + " " + valueTrigger);
+                        }
                         tvTrigger.setTextColor(Color.parseColor("#EEEEEE")); // Cambiado desde LTGRAY
                         tvTrigger.setTextSize(15); // Subido de 14 a 15
                         tvTrigger.setTypeface(null, Typeface.NORMAL);
@@ -173,7 +180,6 @@ public class ProcessListActivity extends AppCompatActivity {
                         );
                         eliminarParams.setMargins(dpToPx(16), dpToPx(10), dpToPx(16), dpToPx(16));
                         btnEliminar.setLayoutParams(eliminarParams);
-                        int triggerId = proceso.has("trigger_id") ? proceso.get("trigger_id").getAsInt() : -1;
                         btnEliminar.setOnClickListener(v -> eliminarProceso(processId, triggerId, valueTrigger));
 
                         // --- Agregar todos los elementos a la tarjeta ---

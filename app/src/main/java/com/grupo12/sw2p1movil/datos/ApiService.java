@@ -36,7 +36,7 @@ public interface ApiService {
     @POST("devices")
     Call<JsonObject> createDevice(@Header("Authorization") String authHeader, @Body JsonObject nuevo);
 
-    @POST("buttons")
+    @POST("orders/button")
     Call<JsonObject> sendButtonTrigger(@Header("Authorization") String token, @Body JsonObject data);
 
     @GET("processes")
