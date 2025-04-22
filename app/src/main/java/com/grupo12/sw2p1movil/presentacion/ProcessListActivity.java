@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -80,6 +81,7 @@ public class ProcessListActivity extends AppCompatActivity {
                         String valueTrigger = proceso.has("value_trigger") ? proceso.get("value_trigger").getAsString() : "";
                         String operator = proceso.has("operator") ? proceso.get("operator").getAsString() : "=";
                         int triggerId = proceso.has("trigger_id") ? proceso.get("trigger_id").getAsInt() : -1;
+                        boolean isEnabled = proceso.has("enabled") && proceso.get("enabled").getAsBoolean();
 
 
                         // Trigger info
@@ -121,15 +123,58 @@ public class ProcessListActivity extends AppCompatActivity {
                         tarjetaParams.setMargins(0, dpToPx(10), 0, dpToPx(10));
                         tarjeta.setLayoutParams(tarjetaParams);
 
-                        // --- TÍTULO: Nombre del proceso ---
+                        // --- Header con título y switch alineados ---
+                        LinearLayout header = new LinearLayout(ProcessListActivity.this);
+                        header.setOrientation(LinearLayout.HORIZONTAL);
+                        header.setBackgroundColor(Color.parseColor("#417685"));
+                        header.setPadding(dpToPx(12), dpToPx(10), dpToPx(12), dpToPx(10));
+                        header.setGravity(Gravity.CENTER_VERTICAL);
+
+                        // Título del proceso
                         TextView tvNombre = new TextView(ProcessListActivity.this);
                         tvNombre.setText(name);
-                        tvNombre.setBackgroundColor(Color.parseColor("#417685")); // azul medio verdoso
                         tvNombre.setTextColor(Color.WHITE);
                         tvNombre.setTypeface(null, Typeface.BOLD);
                         tvNombre.setTextSize(18);
                         tvNombre.setGravity(Gravity.CENTER);
-                        tvNombre.setPadding(dpToPx(12), dpToPx(10), dpToPx(12), dpToPx(10));
+                        tvNombre.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1)); // ocupa todo el espacio libre
+
+                        // Switch elegante
+                        Switch switchEnabled = new Switch(ProcessListActivity.this);
+                        switchEnabled.setChecked(isEnabled);
+                        switchEnabled.setThumbTintList(android.content.res.ColorStateList.valueOf(Color.WHITE));
+                        switchEnabled.setTrackTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#00ADB5")));
+                        switchEnabled.setScaleX(0.9f); // más pequeño
+                        switchEnabled.setScaleY(0.9f);
+                        switchEnabled.setPadding(0, 0, 0, 0);
+
+                        // Listener del switch (mantener igual)
+                        switchEnabled.setOnCheckedChangeListener((buttonView, checked) -> {
+                            JsonObject json = new JsonObject();
+                            json.addProperty("enabled", checked);
+
+                            ApiService apiService = ApiClient.getClient().create(ApiService.class);
+                            apiService.updateEnabled("Bearer " + token, processId, json).enqueue(new Callback<JsonObject>() {
+                                @Override
+                                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                                    if (response.isSuccessful()) {
+                                        Toast.makeText(ProcessListActivity.this, "Estado actualizado", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(ProcessListActivity.this, "Error al actualizar", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<JsonObject> call, Throwable t) {
+                                    Toast.makeText(ProcessListActivity.this, "Fallo de red: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        });
+
+                        // Agregar título y switch al header
+                        header.addView(tvNombre);
+                        header.addView(switchEnabled);
+
 
                         // --- Trigger + valor ---
                         TextView tvTrigger = new TextView(ProcessListActivity.this);
@@ -183,13 +228,16 @@ public class ProcessListActivity extends AppCompatActivity {
                         btnEliminar.setOnClickListener(v -> eliminarProceso(processId, triggerId, valueTrigger));
 
                         // --- Agregar todos los elementos a la tarjeta ---
-                        tarjeta.addView(tvNombre);
+                        tarjeta.addView(header);
                         tarjeta.addView(tvTrigger);
                         tarjeta.addView(tvAccLabel);
                         tarjeta.addView(tvAcciones);
                         tarjeta.addView(btnEliminar);
 
+
                         layoutProcesos.addView(tarjeta);
+
+
                     }
                 } else {
                     Toast.makeText(ProcessListActivity.this, "No se pudieron cargar los procesos", Toast.LENGTH_SHORT).show();

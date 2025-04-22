@@ -44,7 +44,7 @@
             android:id="@+id/etEsp32Id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="ESP32 ID (ej: esp32-abc123)"
+            android:hint="ESP32 ID (ej: FC:E8:C0:7C:7C:FC)"
             android:inputType="text"
             android:textColor="#EEEEEE"
             android:textColorHint="#EEEEEE"
